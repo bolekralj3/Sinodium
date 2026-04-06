@@ -122,7 +122,14 @@ button {
   box-shadow: 0 1px 0 color-mix(in srgb, var(--color-white) 40%, transparent);
 }
 
-.nav { position: relative; }
+.nav {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+}
 
 .logo {
   font-family: var(--font-heading);
@@ -170,6 +177,10 @@ button {
     top: 100%;
     left: 0;
     right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    z-index: 30;
     box-shadow: var(--shadow-soft);
   }
 }
