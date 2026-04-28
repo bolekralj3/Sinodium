@@ -226,6 +226,9 @@ button {
   position: relative;
   z-index: 1;
   padding-block: clamp(3rem, 8vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero h1 {
@@ -250,6 +253,31 @@ button {
   max-width: 36rem;
   margin-inline: auto;
   text-shadow: 0 1px 12px color-mix(in srgb, var(--color-text-primary) 40%, transparent);
+}
+
+.hero-capacity {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-white) 55%, transparent);
+  background: color-mix(in srgb, var(--color-text-primary) 52%, transparent);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1vw + 0.75rem, 1.3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  box-shadow: var(--shadow-lift);
+}
+
+.hero-capacity-icon {
+  width: 1.3em;
+  height: 1.3em;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 /* --- Sections --- */
@@ -718,6 +746,21 @@ section h2 {
 
   .nav-list a {
     font-size: var(--text-small);
+  }
+
+  .hero-inner {
+    min-height: min(85vh, 52rem);
+    justify-content: center;
+  }
+
+  .hero-capacity {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1.4rem, 3vw, 2.5rem);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 0.85rem 1.45rem;
+    font-size: clamp(1.1rem, 0.45vw + 1rem, 1.35rem);
   }
 
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
