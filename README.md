@@ -33,4 +33,13 @@ python3 -m http.server 8000
 # or: npx serve .
 ```
 
-Replace `villa-sinodium.example.com` in `<head>` when you have a live domain.
+Replace `villa-sinodium.example.com` in `<head>` when you have a live domain (GitHub Pages URL is fine until a custom domain exists).
+
+## Meta Pixel and cookies (MVP)
+
+- **`privacy.html`** — privacy notice; linked from the footer on `index.html`.
+- **Cookie banner** — “Reject” / “Accept marketing”. The Meta Pixel loads **only after Accept** (EU-friendly default).
+- **`script.js`** — set `META_PIXEL_ID` to your Pixel ID from Meta Events Manager when you have one. Leave it **empty** until then: no `fbevents.js` request, consent still works.
+- **Events sent when the Pixel is active:** standard **PageView**; custom **`LocationMapClick`** (Open in Google Maps link), **`ContactEmailClick`** (`mailto:`), **`ContactPhoneClick`** (`tel:`) in `#contact`.
+
+Step-by-step Meta Business setup and launch checklist: [docs/mvp-meta-measurement-plan.md](docs/mvp-meta-measurement-plan.md). Broader organic + ads context: [docs/facebook-instagram-marketing-plan.md](docs/facebook-instagram-marketing-plan.md).

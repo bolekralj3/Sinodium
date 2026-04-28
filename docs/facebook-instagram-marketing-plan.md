@@ -2,16 +2,18 @@
 
 Static site: `index.html`, `styles.css`, `script.js`. This document covers public URL, organic presence, paid ads, **Meta Pixel** measurement, optional **GA4**, and EU-oriented **cookie consent** — plus implementation tickets.
 
+**MVP measurement (saved in-repo):** [mvp-meta-measurement-plan.md](mvp-meta-measurement-plan.md) — PageView + `LocationMapClick` / `ContactEmailClick` / `ContactPhoneClick` after consent; set `META_PIXEL_ID` in `script.js` when you have a Pixel.
+
 ## Task tracker (high level)
 
 - [ ] Confirm GitHub Pages URL; update canonical + `og:url` + `og:image` + `twitter:image` in `index.html`
 - [ ] Create Facebook Page, Instagram (pro), connect IG to Page; website field + bio = site URL
 - [ ] Posting pillars (property, location, prices, season); schedule via Business Suite
-- [ ] **SITE:** `privacy.html` + cookie consent; load Pixel only after marketing consent (EU)
-- [ ] **SITE:** Meta Pixel base + Lead + ViewContent (prices); verify in Test Events
+- [x] **SITE:** `privacy.html` + cookie consent + footer link; load Pixel only after marketing consent (EU)
+- [ ] **SITE:** Set `META_PIXEL_ID` in `script.js`; verify **PageView** + custom contact events in Test Events (optional: add standard **Lead** / **ViewContent** later per tickets below)
 - [ ] **META:** Business Portfolio, ad account, payment, Pixel in Events Manager, domain verification
 - [ ] **ADS:** Special category if required, creatives, destination URL, optimization event, launch
-- [ ] Replace placeholder contact in `index.html`; link privacy policy in footer
+- [ ] Replace placeholder contact in `index.html`
 - [ ] Optional: custom domain + DNS + GitHub custom domain + refresh meta URLs
 
 ---
