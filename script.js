@@ -3,9 +3,9 @@
 
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      var targetId = this.getAttribute('href');
+      const targetId = this.getAttribute('href');
       if (targetId === '#') return;
-      var target = document.querySelector(targetId);
+      const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -13,19 +13,19 @@
     });
   });
 
-  var navToggle = document.querySelector('.nav-toggle');
-  var nav = document.querySelector('.nav');
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav');
   if (navToggle && nav) {
     navToggle.addEventListener('click', function () {
-      var expanded = this.getAttribute('aria-expanded') === 'true';
+      const expanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', !expanded);
       this.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
       nav.classList.toggle('is-open', !expanded);
     });
   }
 
-  var lightbox = document.getElementById('lightbox');
-  var lightboxImg = lightbox && lightbox.querySelector('.lightbox-img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox && lightbox.querySelector('.lightbox-img');
 
   function openLightbox(webpSrc, jpgFallback, altText) {
     if (!lightbox || !lightboxImg) return;
@@ -37,7 +37,7 @@
     };
     lightbox.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-    var closeBtn = lightbox.querySelector('.lightbox-close');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
     if (closeBtn) closeBtn.focus();
   }
 
@@ -52,10 +52,10 @@
 
   document.querySelectorAll('.gallery-card[data-lightbox]').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var webp = this.getAttribute('data-lightbox');
-      var jpg = this.getAttribute('data-lightbox-fallback') || '';
-      var innerImg = this.querySelector('img');
-      var altText = innerImg ? innerImg.getAttribute('alt') : '';
+      const webp = this.getAttribute('data-lightbox');
+      const jpg = this.getAttribute('data-lightbox-fallback') || '';
+      const innerImg = this.querySelector('img');
+      const altText = innerImg ? innerImg.getAttribute('alt') : '';
       openLightbox(webp, jpg, altText);
     });
   });
