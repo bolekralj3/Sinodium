@@ -247,7 +247,16 @@ button {
   text-shadow: 0 1px 12px color-mix(in srgb, var(--color-text-primary) 40%, transparent);
 }
 
-.hero-capacity {
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-capacity,
+.hero-minstay {
   margin: 0;
   display: inline-flex;
   align-items: center;
@@ -726,11 +735,16 @@ section h2 {
     justify-content: center;
   }
 
-  .hero-capacity {
+  .hero-badges {
     position: absolute;
     left: 50%;
     bottom: clamp(1.4rem, 3vw, 2.5rem);
     transform: translateX(-50%);
+    flex-wrap: nowrap;
+  }
+
+  .hero-capacity,
+  .hero-minstay {
     white-space: nowrap;
     padding: 0.85rem 1.45rem;
     font-size: clamp(1.1rem, 0.45vw + 1rem, 1.35rem);
