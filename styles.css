@@ -77,8 +77,6 @@ h1, h2, h3, h4 {
 }
 
 p {
-  font-family: var(--font-body);
-  font-size: var(--text-body);
   line-height: var(--leading-relaxed);
 }
 
@@ -93,13 +91,7 @@ button {
   color: inherit;
 }
 
-.container {
-  width: 100%;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-}
-
+.container,
 .container-wide {
   width: 100%;
   max-width: var(--container-max);
@@ -307,8 +299,6 @@ section h2 {
 .section-lead {
   margin: 0 0 1.65rem;
   max-width: var(--text-max);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
   line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
 }
@@ -316,9 +306,6 @@ section h2 {
 .prose p {
   margin: 0 0 1.1rem;
   max-width: var(--text-max);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
 }
 
@@ -326,11 +313,9 @@ section h2 {
 
 .about-subheading {
   margin: 2.25rem 0 1rem;
-  font-family: var(--font-heading);
   font-size: var(--text-h2);
   line-height: var(--leading-snug);
   font-weight: 600;
-  letter-spacing: var(--tracking-heading);
   color: var(--color-text-primary);
 }
 
@@ -355,7 +340,6 @@ section h2 {
   background: var(--color-white);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
-  font-family: var(--font-body);
   font-size: var(--text-small);
   font-weight: 500;
   line-height: var(--leading-body);
@@ -460,9 +444,6 @@ section h2 {
 
 .location-card-body p {
   margin: 0 0 0.85rem;
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
   max-width: none;
 }
@@ -471,7 +452,6 @@ section h2 {
 
 .visit-credits {
   margin: 2.25rem 0 0;
-  font-family: var(--font-body);
   font-size: var(--text-small);
   line-height: var(--leading-body);
   color: var(--color-text-secondary);
@@ -562,14 +542,10 @@ section h2 {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.35rem 0.75rem;
-  font-family: var(--font-body);
-  font-size: var(--text-body);
   line-height: var(--leading-body);
 }
 
 .contact-label {
-  font-family: var(--font-body);
-  font-size: var(--text-body);
   font-weight: 600;
   line-height: var(--leading-body);
   min-width: 4.5rem;
@@ -589,7 +565,6 @@ section h2 {
 
 .contact-map-note {
   margin: 0 0 0.75rem;
-  font-family: var(--font-body);
   font-size: var(--text-small);
   line-height: var(--leading-body);
 }
@@ -627,7 +602,6 @@ section h2 {
 .site-footer {
   padding: 1.75rem var(--container-pad);
   text-align: center;
-  font-family: var(--font-body);
   font-size: var(--text-small);
   line-height: var(--leading-body);
   color: var(--color-text-secondary);
@@ -641,7 +615,6 @@ section h2 {
 }
 
 .nav-list a {
-  font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: 500;
   letter-spacing: 0.02em;
