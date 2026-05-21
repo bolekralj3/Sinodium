@@ -73,4 +73,49 @@
       }
     });
   }
+  // --- Cookie Consent (UM-14) ---
+
+  var CONSENT_KEY = 'villa_cookie_consent';
+
+  function loadMarketingScripts() {
+    // UM-17: inject Meta Pixel base code here once Pixel ID is available
+    // UM-22: inject GA4 gtag.js here if opted in
+  }
+
+  function hideBanner() {
+    var banner = document.getElementById('cookieBanner');
+    if (banner) banner.setAttribute('hidden', '');
+  }
+
+  function initCookieConsent() {
+    var consent = localStorage.getItem(CONSENT_KEY);
+
+    if (consent === 'accepted') {
+      loadMarketingScripts();
+      return;
+    }
+
+    if (consent === 'rejected') {
+      return;
+    }
+
+    // No stored preference — show the banner
+    var banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    banner.removeAttribute('hidden');
+
+    document.getElementById('cookieAccept').addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'accepted');
+      hideBanner();
+      loadMarketingScripts();
+    });
+
+    document.getElementById('cookieReject').addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'rejected');
+      hideBanner();
+    });
+  }
+
+  initCookieConsent();
+
 })();
