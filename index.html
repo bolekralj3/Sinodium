@@ -18,7 +18,13 @@
   <meta name="twitter:title" content="Villa Sinodium – Holiday villa with pool near Šibenik, Croatia">
   <meta name="twitter:description" content="Comfortable villa with private pool in peaceful Dalmatian countryside. Near the coast, Krka, Šibenik, Zrmanja, and Split. Prices and contact on site.">
   <meta name="twitter:image" content="https://villasinodium.com/images/main/hero-main-1200.jpg">
-  <link rel="preload" as="image" href="images/main/hero-main-1200.webp" type="image/webp">
+  <link rel="preload" as="image"
+    href="images/main/hero-main-1200.webp"
+    imagesrcset="images/main/hero-main-800.webp 800w,
+                 images/main/hero-main-1200.webp 1200w,
+                 images/main/hero-main-1920.webp 1920w"
+    imagesizes="100vw"
+    type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -274,6 +280,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
