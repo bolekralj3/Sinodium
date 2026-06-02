@@ -78,7 +78,27 @@
   var CONSENT_KEY = 'villa_cookie_consent';
 
   function loadMarketingScripts() {
-    // UM-17: inject Meta Pixel base code here once Pixel ID is available
+    // UM-17: Meta Pixel — loads only after consent
+    if (!window.fbq) {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '2640755696321208');
+      fbq('track', 'PageView');
+
+      // Track Lead events on contact actions
+      var bookBtn = document.querySelector('.float-book-btn');
+      var emailLink = document.querySelector('a[href="mailto:mario.lela1@gmail.com"]');
+      var phoneLink = document.querySelector('a[href="tel:+385982080071"]');
+      if (bookBtn) bookBtn.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Book Now button' }); });
+      if (emailLink) emailLink.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Email contact' }); });
+      if (phoneLink) phoneLink.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Phone contact' }); });
+    }
     // UM-22: inject GA4 gtag.js here if opted in
   }
 
