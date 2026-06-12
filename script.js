@@ -91,13 +91,36 @@
       fbq('init', '2640755696321208');
       fbq('track', 'PageView');
 
-      // Track Lead events on contact actions
+      // UM-18: Lead + Contact on email, phone, and Book Now clicks
       var bookBtn = document.querySelector('.float-book-btn');
       var emailLink = document.querySelector('a[href="mailto:mario.lela1@gmail.com"]');
       var phoneLink = document.querySelector('a[href="tel:+385982080071"]');
-      if (bookBtn) bookBtn.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Book Now button' }); });
-      if (emailLink) emailLink.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Email contact' }); });
-      if (phoneLink) phoneLink.addEventListener('click', function () { fbq('track', 'Lead', { content_name: 'Phone contact' }); });
+      if (bookBtn) bookBtn.addEventListener('click', function () {
+        fbq('track', 'Lead', { content_name: 'book_now_click' });
+        fbq('track', 'Contact');
+      });
+      if (emailLink) emailLink.addEventListener('click', function () {
+        fbq('track', 'Lead', { content_name: 'email_click' });
+        fbq('track', 'Contact');
+      });
+      if (phoneLink) phoneLink.addEventListener('click', function () {
+        fbq('track', 'Lead', { content_name: 'phone_click' });
+        fbq('track', 'Contact');
+      });
+
+      // UM-19: ViewContent when #prices section is 50% visible (fires once)
+      var pricesSection = document.getElementById('prices');
+      if (pricesSection && 'IntersectionObserver' in window) {
+        var pricesObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              fbq('track', 'ViewContent', { content_name: 'prices_section' });
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.5 });
+        pricesObserver.observe(pricesSection);
+      }
     }
     // UM-22: inject GA4 gtag.js here if opted in
   }
