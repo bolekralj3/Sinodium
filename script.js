@@ -93,8 +93,8 @@
 
       // UM-18: Lead + Contact on email, phone, and Book Now clicks
       var bookBtn = document.querySelector('.float-book-btn');
-      var emailLink = document.querySelector('a[href="mailto:mario.lela1@gmail.com"]');
-      var phoneLink = document.querySelector('a[href="tel:+385982080071"]');
+      var emailLink = document.querySelector('.contact-list a[href^="mailto:"]');
+      var phoneLink = document.querySelector('.contact-list a[href^="tel:"]');
       if (bookBtn) bookBtn.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'book_now_click' });
         fbq('track', 'Contact');
