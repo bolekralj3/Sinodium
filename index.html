@@ -47,7 +47,7 @@
     </nav>
   </header>
 
-  <a href="mailto:mario.lela1@gmail.com" class="float-book-btn" aria-label="Book Villa Sinodium by email">Book Now</a>
+  <a href="#contact" class="float-book-btn" aria-label="Book Villa Sinodium — send an enquiry">Book Now</a>
 
   <main>
     <section class="hero" id="hero" aria-labelledby="hero-heading">
@@ -227,7 +227,60 @@
 
     <section class="contact section-block section-alt" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <h2 id="contact-heading">Contact Us</h2>
+        <h2 id="contact-heading">Book Your Stay</h2>
+        <p class="section-lead">Fill in your details and we'll get back to you within 24 hours.</p>
+
+        <form class="booking-form" id="bookingForm" novalidate>
+          <!-- Honeypot: hidden from humans, catches bots -->
+          <input type="text" name="honeypot" class="booking-form__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="booking-form__row">
+            <div class="booking-form__field">
+              <label for="bf-name">Your name <span aria-hidden="true">*</span></label>
+              <input type="text" id="bf-name" name="name" required autocomplete="name" placeholder="Ana Horvat">
+            </div>
+            <div class="booking-form__field">
+              <label for="bf-email">Email address <span aria-hidden="true">*</span></label>
+              <input type="email" id="bf-email" name="email" required autocomplete="email" placeholder="ana@example.com">
+            </div>
+          </div>
+
+          <div class="booking-form__row">
+            <div class="booking-form__field">
+              <label for="bf-checkin">Check-in date <span aria-hidden="true">*</span></label>
+              <input type="date" id="bf-checkin" name="checkin" required>
+            </div>
+            <div class="booking-form__field">
+              <label for="bf-checkout">Check-out date <span aria-hidden="true">*</span></label>
+              <input type="date" id="bf-checkout" name="checkout" required>
+            </div>
+          </div>
+
+          <div class="booking-form__field booking-form__field--half">
+            <label for="bf-guests">Number of guests <span aria-hidden="true">*</span></label>
+            <select id="bf-guests" name="guests" required>
+              <option value="">Select…</option>
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+              <option value="5">5 guests</option>
+              <option value="6">6 guests</option>
+              <option value="7">7 guests</option>
+            </select>
+          </div>
+
+          <div class="booking-form__field">
+            <label for="bf-message">Message (optional)</label>
+            <textarea id="bf-message" name="message" rows="4" placeholder="Any questions or special requests…"></textarea>
+          </div>
+
+          <div class="booking-form__actions">
+            <button type="submit" class="booking-form__submit">Send</button>
+            <p class="booking-form__status" id="formStatus" aria-live="polite" role="status"></p>
+          </div>
+        </form>
+
         <ul class="contact-list">
           <li>
             <span class="contact-label">Address</span>
@@ -282,5 +335,103 @@
   </div>
 
   <script src="script.js" defer></script>
+
+  <script>
+    // ── Booking form ──────────────────────────────────────────────────────────
+    // STEP: After deploying the Cloudflare Worker, replace the URL below with
+    // your actual Worker URL, e.g. https://sinodium-mailer.your-name.workers.dev/send
+    const WORKER_URL = 'https://sinodium-mailer.bornapadel.workers.dev/send';
+
+    (function () {
+      const form = document.getElementById('bookingForm');
+      const status = document.getElementById('formStatus');
+      if (!form) return;
+
+      // Safe wrapper — fires only if fbq loaded (i.e. user accepted cookies)
+      function track(event, params) {
+        if (typeof fbq === 'function') fbq('track', event, params || {});
+      }
+
+      // Track first interaction with the form
+      let formStarted = false;
+      form.addEventListener('focusin', function () {
+        if (formStarted) return;
+        formStarted = true;
+        track('InitiateCheckout', { content_name: 'booking_form_start' });
+      }, { once: false });
+
+      // Update checkout min date whenever checkin changes
+      form.checkin.addEventListener('change', function () {
+        if (!form.checkin.value) return;
+        const minCheckout = new Date(form.checkin.value);
+        minCheckout.setDate(minCheckout.getDate() + 7);
+        form.checkout.min = minCheckout.toISOString().split('T')[0];
+        // Clear checkout if it's now invalid
+        if (form.checkout.value && new Date(form.checkout.value) < minCheckout) {
+          form.checkout.value = '';
+        }
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = form.querySelector('.booking-form__submit');
+
+        // Client-side date validation — minimum 7 nights
+        const checkin = new Date(form.checkin.value);
+        const checkout = new Date(form.checkout.value);
+        const nights = (checkout - checkin) / (1000 * 60 * 60 * 24);
+        if (nights < 7) {
+          setStatus('error', 'Minimum stay is 7 nights.');
+          return;
+        }
+
+        // Track submit attempt
+        track('Lead', { content_name: 'booking_form_attempt' });
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        btn.style.opacity = '0.7';
+        setStatus('', '');
+
+        try {
+          const res = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name:     form.name.value.trim(),
+              email:    form.email.value.trim(),
+              checkin:  form.checkin.value,
+              checkout: form.checkout.value,
+              guests:   form.guests.value,
+              message:  form.message.value.trim(),
+              honeypot: form.honeypot.value,
+            }),
+          });
+
+          if (res.ok) {
+            // Track successful enquiry — the key conversion event
+            track('Lead', { content_name: 'booking_form_success' });
+            track('Contact');
+            setStatus('success', '✓ Enquiry sent! We\'ll reply within 24 hours.');
+            form.reset();
+          } else {
+            throw new Error('Server error ' + res.status);
+          }
+        } catch (err) {
+          console.error('Booking form error:', err);
+          setStatus('error', 'Something went wrong. Please email us directly at mario.lela1@gmail.com');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Send';
+          btn.style.opacity = '';
+        }
+      });
+
+      function setStatus(type, msg) {
+        status.textContent = msg;
+        status.className = 'booking-form__status' + (type ? ' booking-form__status--' + type : '');
+      }
+    })();
+  </script>
 </body>
 </html>
