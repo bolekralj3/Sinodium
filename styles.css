@@ -618,6 +618,35 @@ section h2 {
   background: color-mix(in srgb, var(--color-surface) 35%, var(--color-background));
 }
 
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+.footer-social-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .nav a:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
@@ -953,10 +982,13 @@ section h2 {
 }
 
 /* Honeypot: invisible to users */
-.booking-form__honeypot {
+.booking-form input.booking-form__honeypot {
   position: absolute;
+  left: -9999px;
   width: 1px;
   height: 1px;
+  padding: 0;
+  border: 0;
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
