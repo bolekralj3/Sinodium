@@ -79,11 +79,11 @@
 
   // UM-30: Google Ads conversion tracking — paste IDs from Google Ads (UM-29).
   // Everything no-ops safely while these are empty.
-  var GADS_ID = ''; // e.g. 'AW-123456789'
+  var GADS_ID = 'AW-18302881072';
   var GADS_LABELS = {
-    form_submit: '', // Enquiry form submit (PRIMARY) — e.g. 'AbCdEfGhIjK'
-    phone_click: '',
-    email_click: ''
+    form_submit: '8TGaCOmx2MscELCav5dE', // "Submit lead form" (PRIMARY)
+    phone_click: '-32sCIfK18scELCav5dE',
+    email_click: 'xkn0CIrK18scELCav5dE'
   };
 
   // Global so the booking-form script in index.html can report conversions
