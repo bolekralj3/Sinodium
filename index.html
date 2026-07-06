@@ -313,11 +313,6 @@
 
   <footer class="site-footer">
     <div class="footer-social">
-      <a href="https://www.facebook.com/profile.php?id=61590572510307" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Villa Sinodium on Facebook">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
-        </svg>
-      </a>
       <a href="https://www.instagram.com/villasinodium/" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Villa Sinodium on Instagram">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -339,7 +334,7 @@
   <!-- Cookie consent banner — shown by script.js on first visit -->
   <div class="cookie-banner" id="cookieBanner" hidden role="dialog" aria-live="polite" aria-label="Cookie consent">
     <p class="cookie-banner-text">
-      This site uses cookies for advertising. We use Meta Pixel to measure how visitors find us. No tracking until you accept.
+      This site uses cookies for advertising. We use Meta Pixel and Google Ads to measure how visitors find us. No tracking until you accept.
       <a href="/privacy.html">Learn more</a>
     </p>
     <div class="cookie-banner-actions">
@@ -426,6 +421,7 @@
             // Track successful enquiry — the key conversion event
             track('Lead', { content_name: 'booking_form_success' });
             track('Contact');
+            if (typeof gadsConvert === 'function') gadsConvert('form_submit'); // UM-30
             setStatus('success', '✓ Enquiry sent! We\'ll reply within 24 hours.');
             form.reset();
           } else {

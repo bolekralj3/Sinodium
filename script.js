@@ -77,7 +77,43 @@
 
   var CONSENT_KEY = 'villa_cookie_consent';
 
+  // UM-30: Google Ads conversion tracking — paste IDs from Google Ads (UM-29).
+  // Everything no-ops safely while these are empty.
+  var GADS_ID = ''; // e.g. 'AW-123456789'
+  var GADS_LABELS = {
+    form_submit: '', // Enquiry form submit (PRIMARY) — e.g. 'AbCdEfGhIjK'
+    phone_click: '',
+    email_click: ''
+  };
+
+  // Global so the booking-form script in index.html can report conversions
+  window.gadsConvert = function (key) {
+    if (!GADS_ID || !GADS_LABELS[key] || typeof window.gtag !== 'function') return;
+    window.gtag('event', 'conversion', { send_to: GADS_ID + '/' + GADS_LABELS[key] });
+  };
+
+  function loadGoogleTag() {
+    if (!GADS_ID || window.gtag) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GADS_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    // This function only ever runs after an explicit banner Accept,
+    // so ad consent is granted; analytics stays denied (no GA4 yet, UM-22).
+    window.gtag('consent', 'default', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'denied'
+    });
+    window.gtag('config', GADS_ID);
+  }
+
   function loadMarketingScripts() {
+    loadGoogleTag();
     // UM-17: Meta Pixel — loads only after consent
     if (!window.fbq) {
       !function(f,b,e,v,n,t,s)
@@ -102,10 +138,12 @@
       if (emailLink) emailLink.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'email_click' });
         fbq('track', 'Contact');
+        window.gadsConvert('email_click'); // UM-30
       });
       if (phoneLink) phoneLink.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'phone_click' });
         fbq('track', 'Contact');
+        window.gadsConvert('phone_click'); // UM-30
       });
 
       // UM-19: ViewContent when #prices section is 50% visible (fires once)
