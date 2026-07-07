@@ -130,7 +130,7 @@
       // UM-18: Lead + Contact on email, phone, and Book Now clicks
       var bookBtn = document.querySelector('.float-book-btn');
       var emailLink = document.querySelector('.contact-list a[href^="mailto:"]');
-      var phoneLink = document.querySelector('.contact-list a[href^="tel:"]');
+      var whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
       if (bookBtn) bookBtn.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'book_now_click' });
         fbq('track', 'Contact');
@@ -140,10 +140,12 @@
         fbq('track', 'Contact');
         window.gadsConvert('email_click'); // UM-30
       });
-      if (phoneLink) phoneLink.addEventListener('click', function () {
-        fbq('track', 'Lead', { content_name: 'phone_click' });
-        fbq('track', 'Contact');
-        window.gadsConvert('phone_click'); // UM-30
+      whatsappLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          fbq('track', 'Lead', { content_name: 'whatsapp_click' });
+          fbq('track', 'Contact');
+          window.gadsConvert('phone_click'); // UM-30: WhatsApp counts as a contact conversion
+        });
       });
 
       // UM-19: ViewContent when #prices section is 50% visible (fires once)

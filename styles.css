@@ -1108,3 +1108,131 @@ section h2 {
 
 .booking-form__status--success { color: var(--color-secondary); }
 .booking-form__status--error   { color: #c0392b; }
+
+/* --- Guest reviews --- */
+.reviews-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1.9rem;
+  padding: 0.65rem 1.1rem 0.65rem 0.65rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.reviews-badge-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+}
+
+.reviews-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.reviews-badge-text strong { color: var(--color-text-primary); }
+.reviews-badge-text a { color: var(--color-primary); font-weight: 600; }
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.25rem;
+}
+
+.review-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.5rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.review-stars {
+  color: var(--color-accent-dark);
+  font-size: 1.05rem;
+  letter-spacing: 0.15em;
+}
+
+.review-star-half {
+  position: relative;
+  display: inline-block;
+  width: 0.55em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.review-card blockquote {
+  margin: 0;
+  flex: 1;
+  font-size: 1.02rem;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+}
+
+.review-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.85rem;
+}
+
+.review-author { font-weight: 600; color: var(--color-text-primary); }
+.review-meta { font-size: 0.85rem; color: var(--color-text-secondary); }
+
+.reviews-note {
+  margin: 1.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+/* --- WhatsApp CTA --- */
+.whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.5rem;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--color-white);
+  background: #25d366;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.whatsapp-cta:hover,
+.whatsapp-cta:focus-visible {
+  background: #1ebe5a;
+  color: var(--color-white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+}
+
+.whatsapp-cta-icon { flex-shrink: 0; }
+
+.whatsapp-note {
+  margin: 0 0 1.75rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
