@@ -471,6 +471,7 @@
             track('Lead', { content_name: 'booking_form_success' });
             track('Contact');
             if (typeof gadsConvert === 'function') gadsConvert('form_submit'); // UM-30
+            if (typeof ga4Lead === 'function') ga4Lead('booking_form'); // UM-22
             setStatus('success', '✓ Enquiry sent! We\'ll reply within 24 hours.');
             form.reset();
           } else {

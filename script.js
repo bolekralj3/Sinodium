@@ -80,6 +80,7 @@
   // UM-30: Google Ads conversion tracking — paste IDs from Google Ads (UM-29).
   // Everything no-ops safely while these are empty.
   var GADS_ID = 'AW-18302881072';
+  var GA4_ID = 'G-Q8M92TVDVZ'; // UM-22: Google Analytics 4 (site dashboards)
   var GADS_LABELS = {
     form_submit: '8TGaCOmx2MscELCav5dE', // "Submit lead form" (PRIMARY)
     phone_click: '-32sCIfK18scELCav5dE',
@@ -92,6 +93,12 @@
     window.gtag('event', 'conversion', { send_to: GADS_ID + '/' + GADS_LABELS[key] });
   };
 
+  // UM-22: Global GA4 lead event — mark "generate_lead" as a Key event in GA4.
+  window.ga4Lead = function (method) {
+    if (!GA4_ID || typeof window.gtag !== 'function') return;
+    window.gtag('event', 'generate_lead', { method: method || 'unknown' });
+  };
+
   function loadGoogleTag() {
     if (!GADS_ID || window.gtag) return;
     var s = document.createElement('script');
@@ -102,14 +109,15 @@
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
     // This function only ever runs after an explicit banner Accept,
-    // so ad consent is granted; analytics stays denied (no GA4 yet, UM-22).
+    // so both ad and analytics consent are granted (UM-22).
     window.gtag('consent', 'default', {
       ad_storage: 'granted',
       ad_user_data: 'granted',
       ad_personalization: 'granted',
-      analytics_storage: 'denied'
+      analytics_storage: 'granted'
     });
     window.gtag('config', GADS_ID);
+    if (GA4_ID) window.gtag('config', GA4_ID); // UM-22: GA4 dashboards
   }
 
   function loadMarketingScripts() {
@@ -134,17 +142,20 @@
       if (bookBtn) bookBtn.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'book_now_click' });
         fbq('track', 'Contact');
+        ga4Lead('book_now'); // UM-22
       });
       if (emailLink) emailLink.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'email_click' });
         fbq('track', 'Contact');
         window.gadsConvert('email_click'); // UM-30
+        ga4Lead('email'); // UM-22
       });
       whatsappLinks.forEach(function (link) {
         link.addEventListener('click', function () {
           fbq('track', 'Lead', { content_name: 'whatsapp_click' });
           fbq('track', 'Contact');
           window.gadsConvert('phone_click'); // UM-30: WhatsApp counts as a contact conversion
+          ga4Lead('whatsapp'); // UM-22
         });
       });
 
