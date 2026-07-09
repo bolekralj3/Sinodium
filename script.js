@@ -84,7 +84,8 @@
   var GADS_LABELS = {
     form_submit: '8TGaCOmx2MscELCav5dE', // "Submit lead form" (PRIMARY)
     phone_click: '-32sCIfK18scELCav5dE',
-    email_click: 'xkn0CIrK18scELCav5dE'
+    email_click: 'xkn0CIrK18scELCav5dE',
+    book_now: 'PI-PCN_kxs0cELCav5dE' // "Book Now click" (SECONDARY — observation)
   };
 
   // Global so the booking-form script in index.html can report conversions
@@ -142,6 +143,7 @@
       if (bookBtn) bookBtn.addEventListener('click', function () {
         fbq('track', 'Lead', { content_name: 'book_now_click' });
         fbq('track', 'Contact');
+        window.gadsConvert('book_now'); // UM-30: Book Now click as Google Ads conversion
         ga4Lead('book_now'); // UM-22
       });
       if (emailLink) emailLink.addEventListener('click', function () {
